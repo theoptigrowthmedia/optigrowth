@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    
+    <!-- Font Awesome for clean SVG partner logos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb; /* Change this to match your brand color */
+            --text-color: #1f2937;
+            --bg-color: #07162f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .thank-you-card {
+            background: #7ba4ea;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            max-width: 500px;
+            width: 100%;
+            margin-bottom: 80px; /* Space for floating footer */
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .brand-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 24px;
+        }
+
+        /* Success Checkmark Animation */
+        .icon-container {
+            width: 72px;
+            height: 72px;
+            background: #dcfce7;
+            color: #16a34a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+            background-color: #1d4ed8;
+        }
+
+        /* Floating Logos Footer */
+        .floating-footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0D2347;
+            backdrop-filter: blur(8px);
+            padding: 12px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            width: max-content;
+            max-width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .partner-logo {
+            font-size: 20px;
+            color: #64748b;
+            transition: color 0.2s ease;
+        }
+
+        /* Logo Brand Colors on Hover */
+        .fa-youtube:hover { color: #ff0000; }
+        .fa-google:hover { color: #4285f4; }
+        .fa-facebook:hover { color: #1877f2; }
+        .fa-rectangle-ad:hover { color: #f9ab00; } /* Google Ads Placeholder */
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .floating-footer {
+                gap: 12px;
+                padding: 10px 20px;
+            }
+            .footer-label {
+                display: none; /* Hide label on tiny screens to save space */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="thank-you-card">
+        <!-- 1. YOUR WEBSITE LOGO -->
+        <!-- Replace 'your-logo.png' with your actual website logo file path -->
+        <img src="your-logo.png" alt="Our Website Logo" class="brand-logo" onerror="this.style.display='none'">
+
+        <!-- Success Check Icon -->
+        <div class="icon-container">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h1>Thank You!</h1>
+        <p>Our team will contact you shortly. We appreciate you reaching out to us.</p>
+        
+        <a href="/" class="btn-back">Go Back Home</a>
+    </div>
+
+    <!-- 2. FLOATING LOGOS BANNER -->
+    <div class="floating-footer">
+        <span class="footer-label">Trusted Partner</span>
+        <div class="logo-group">
+            <i class="fa-brands fa-youtube partner-logo" title="YouTube"></i>
+            <i class="fa-brands fa-google partner-logo" title="Google"></i>
+            <i class="fa-brands fa-facebook partner-logo" title="Facebook"></i>
+            <i class="fa-solid fa-rectangle-ad partner-logo" title="Google Ads"></i>
+        </div>
+    </div>
+
+</body>
+</html>

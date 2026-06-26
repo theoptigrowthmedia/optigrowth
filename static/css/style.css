@@ -1,0 +1,956 @@
+/* ==========================
+   GLOBAL SETTINGS
+========================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: #07162F;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================
+   COLORS
+========================== */
+
+:root{
+    --navy: #07162F;
+    --navy-light: #0D2347;
+    --gold: #D4AF37;
+    --gold-light: #F5D76E;
+    --white: #ffffff;
+    --gray: #aab3c5;
+}
+
+/* ==========================
+   BACKGROUND EFFECTS
+========================== */
+
+.bg-blur{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: -1;
+}
+
+.blur-1{
+    width: 350px;
+    height: 350px;
+    background: rgba(212, 175, 55, .25);
+    top: 0;
+    left: -100px;
+}
+
+.blur-2{
+    width: 400px;
+    height: 400px;
+    background: rgba(212, 175, 55, .15);
+    right: -100px;
+    top: 500px;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+
+/* ==========================
+   UPGRADED PRO NAVBAR
+========================== */
+
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    
+    /* Tuned navy glassmorphism instead of generic bright white blur */
+    background: rgba(7, 22, 47, 0.75); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    
+    /* Smooth transitions for scroll activation */
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Dynamic Scroll Class (Triggered via JavaScript) */
+header.scrolled {
+    background: rgba(5, 15, 32, 0.95);
+    border-bottom: 1px solid rgba(214, 175, 55, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.navbar {
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+    height: 90px; /* Clean, default height */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: height 0.4s ease;
+}
+
+/* Shrinks the navbar smoothly when the user scrolls */
+header.scrolled .navbar {
+    height: 70px;
+}
+
+/* ==========================
+   LOGO & LINKS
+========================== */
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 165px; /* Scaled perfectly within the navbar container */
+    width: auto;
+    transition: height 0.4s ease;
+}
+
+header.scrolled .logo img {
+    height: 42px; /* Smooth shrink on scroll */
+}
+
+.nav-links {
+    display: flex;
+    gap: 45px;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Premium sliding underline hover effect instead of text-glow */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* ==========================
+   CTA BUTTON EFFECT
+========================== */
+
+.nav-btn {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    border: 1.5px solid var(--gold);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+/* Smooth background slide fill effect on hover */
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    z-index: -1;
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-btn:hover::before {
+    width: 100%;
+}
+
+.nav-btn:hover {
+    color: #07162F; /* Dark text for contrast against gold fill */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    border-color: transparent;
+}
+/* ==========================
+  Rocket
+========================== */
+/* Base setup for the rocket */
+.rocket {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: inline-block; /* Ensures transforms apply flawlessly */
+}
+
+/* Hover effect */
+.rocket:hover {
+    transform: scale(1.05);
+}
+
+/* Lock interactions during flight */
+.rocket.launching {
+    pointer-events: none;
+    animation: cinematicFlight 2.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+/* The Grand Cinematic Flight Path */
+@keyframes cinematicFlight {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 1;
+    }
+    /* Step 1: Smoothly glide to the center of screen and zoom in */
+    35% {
+        transform: translate3d(-25vw, -20vh, 0) scale(1.8) rotate(-10deg);
+        opacity: 1;
+    }
+    /* Pause slightly / charge engines */
+    45% {
+        transform: translate3d(-25vw, -18vh, 0) scale(1.8) rotate(-10deg);
+        opacity: 1;
+    }
+    /* Step 2: Blast off straight into the sky (Exit top) */
+    60% {
+        transform: translate3d(-25vw, -120vh, 0) scale(0.6) rotate(-20deg);
+        opacity: 0;
+    }
+    /* Step 3: Invisible Teleportation to the bottom of the screen */
+    61% {
+        transform: translate3d(-25vw, 120vh, 0) scale(0.6) rotate(0deg);
+        opacity: 0;
+    }
+    /* Step 4: Break back through the atmosphere from the bottom */
+    80% {
+        transform: translate3d(-25vw, 30vh, 0) scale(1.2) rotate(0deg);
+        opacity: 1;
+    }
+    /* Step 5: Smoothly land back in its original position */
+    100% {
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+
+
+
+/* ==========================
+   HERO SECTION
+========================== */
+
+.hero{
+    width: 90%;
+    max-width: 1400px;
+    min-height: 90vh;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60x;
+    padding-top: 100px;
+}
+
+.hero-left{
+    flex: 1;
+}
+
+.hero-badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .08);
+    padding: 10px 18px;
+    border-radius: 50px;
+    margin-bottom: 25px;
+    color: var(--gold);
+}
+
+.hero-left h1{
+    font-size: 72px;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+.hero-left h1 span{
+    color: var(--gold);
+    display: block;
+}
+
+.hero-left p{
+    font-size: 20px;
+    color: var(--gray);
+    max-width: 650px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+/* ==========================
+   HERO BUTTONS
+========================== */
+
+.hero-buttons{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.primary-btn{
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #111;
+    padding: 16px 35px;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.primary-btn:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, .4);
+}
+
+.secondary-btn{
+    text-decoration: none;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, .1);
+    padding: 16px 35px;
+    border-radius: 50px;
+    transition: .3s;
+}
+
+.secondary-btn:hover{
+    background: rgba(255, 255, 255, .05);
+}
+
+/* ==========================
+   HERO STATS
+========================== */
+
+.hero-stats{
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.hero-stats div{
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .08);
+    padding: 20px 30px;
+    border-radius: 20px;
+    min-width: 170px;
+}
+
+.hero-stats h3{
+    color: var(--gold);
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.hero-stats span{
+    color: var(--gray);
+    font-size: 14px;
+}
+
+/* ==========================
+   HERO IMAGE
+========================== */
+
+.hero-right{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rocket{
+    width: 100%;
+    max-width: 550px;
+    animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{ transform: translateY(0px); }
+    50%{ transform: translateY(-25px); }
+    100%{ transform: translateY(0px); }
+}
+
+/* ==========================
+   SECTION HEADER
+========================== */
+
+.section-header{
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.section-header span{
+    color: var(--gold);
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.section-header h2{
+    font-size: 52px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.section-header h2 span{
+    font-size: inherit;
+}
+
+.section-header p{
+    color: var(--gray);
+    max-width: 700px;
+    margin: auto;
+}
+
+/* ==========================
+   SERVICES SECTION
+========================== */
+
+.services{
+    padding: 120px 8%;
+    position: relative;
+}
+
+.services-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.service-card{
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 25px;
+    padding: 35px;
+    transition: .4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transform: scaleX(0);
+    transition: .4s;
+}
+
+.service-card:hover::before{
+    transform: scaleX(1);
+}
+
+.service-card:hover{
+    transform: translateY(-10px);
+    border-color: rgba(212, 175, 55, .3);
+}
+
+.service-card h3{
+    margin: 20px 0 15px;
+    font-size: 24px;
+}
+
+.service-card p{
+    color: var(--gray);
+    line-height: 1.8;
+}
+
+/* ==========================
+   SERVICE ICONS
+========================== */
+
+.icon{
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.youtube{
+    background: rgba(255, 0, 0, .15);
+    color: #ff0000;
+}
+
+.meta{
+    background: rgba(0, 132, 255, .15);
+    color: #0084ff;
+}
+
+.google{
+    background: rgba(52, 168, 83, .15);
+    color: #34A853;
+}
+
+.phone{
+    background: rgba(212, 175, 55, .15);
+    color: var(--gold);
+}
+
+/* ==========================
+   WHY US SECTION
+========================== */
+
+.why-us{
+    padding: 120px 8%;
+    position: relative;
+}
+
+.why-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.why-card{
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 25px;
+    padding: 35px;
+    text-align: center;
+    transition: .4s;
+}
+
+.why-card:hover{
+    transform: translateY(-10px);
+    border-color: rgba(212, 175, 55, .3);
+}
+
+.why-card i{
+    font-size: 45px;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.why-card h3{
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.why-card p{
+    color: var(--gray);
+    line-height: 1.7;
+}
+
+/* ==========================
+   PROCESS SECTION
+========================== */
+
+.process{
+    padding: 120px 8%;
+    position: relative;
+}
+
+.timeline{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.step{
+    text-align: center;
+    position: relative;
+}
+
+.step-number{
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #111;
+    font-weight: 700;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.step h3{
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+.step p{
+    color: var(--gray);
+    line-height: 1.8;
+}
+
+/* ==========================
+   RESULTS SECTION
+========================== */
+
+.results{
+    padding: 120px 8%;
+    position: relative;
+}
+
+.stats-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.stat-card{
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 25px;
+    padding: 45px 30px;
+    text-align: center;
+    transition: .4s;
+}
+
+.stat-card:hover{
+    transform: translateY(-8px);
+    border-color: rgba(212, 175, 55, .3);
+}
+
+.stat-card h3{
+    font-size: 52px;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.stat-card p{
+    color: var(--gray);
+    font-size: 17px;
+}
+
+/* ==========================
+   PREMIUM GLOW EFFECT
+========================== */
+
+.service-card:hover,
+.why-card:hover,
+.stat-card:hover{
+    box-shadow: 0 0 30px rgba(212, 175, 55, .08), 0 0 60px rgba(212, 175, 55, .05);
+}
+
+/* ==========================
+   SCROLL ANIMATION PREP
+========================== */
+
+.service-card,
+.why-card,
+.step,
+.stat-card{
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* ==========================
+   CONTACT SECTION
+========================== */
+
+.contact{
+    padding: 120px 8%;
+}
+
+.contact-content{
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 30px;
+    padding: 60px;
+}
+
+.contact-content h2{
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.contact-content p{
+    color: var(--gray);
+    margin-bottom: 40px;
+}
+
+.contact form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact input,
+.contact select{
+    width: 100%;
+    padding: 18px 20px;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .08);
+    color: white;
+    font-size: 16px;
+}
+
+.contact input::placeholder{
+    color: #bfc7d8;
+}
+
+.contact select{
+    cursor: pointer;
+}
+
+.contact option{
+    color: black;
+}
+
+.contact button{
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    padding: 18px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.contact button:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, .4);
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+    background: #050f20;
+    margin-top: 100px;
+    padding: 80px 8% 30px;
+}
+
+.footer-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.footer-logo{
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.footer-grid h3{
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.footer-grid p{
+    color: var(--gray);
+    line-height: 1.8;
+}
+
+.footer-grid ul{
+    list-style: none;
+}
+
+.footer-grid ul li{
+    margin-bottom: 12px;
+    color: var(--gray);
+    transition: .3s;
+    cursor: pointer;
+}
+
+.footer-grid ul li:hover{
+    color: var(--gold);
+    transform: translateX(5px);
+}
+
+.copyright{
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    color: #9ea8bc;
+}
+
+/* ==========================
+   WHATSAPP FLOAT
+========================== */
+
+.whatsapp{
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 65px;
+    height: 65px;
+    background: #25D366;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 30px;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(37, 211, 102, .5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(37, 211, 102, .7); }
+    70%{ box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+    100%{ box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* ==========================
+   MOBILE MENU
+========================== */
+
+.mobile-menu{
+    display: none;
+}
+
+/* ==========================
+   TABLET RESPONSIVE
+========================== */
+
+@media(max-width: 1024px){
+    .hero{
+        flex-direction: column;
+        text-align: center;
+        padding-top: 50px;
+    }
+    .hero-left h1{
+        font-size: 58px;
+    }
+    .hero-stats{
+        justify-content: center;
+    }
+    .rocket{
+        max-width: 420px;
+    }
+    .section-header h2{
+        font-size: 42px;
+    }
+}
+
+/* ==========================
+   MOBILE RESPONSIVE
+========================== */
+
+@media(max-width: 768px){
+    .navbar{
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+        padding: 20px 0;
+    }
+    .nav-links{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    .hero{
+        min-height: auto;
+        padding: 60px 0;
+    }
+    .hero-left h1{
+        font-size: 42px;
+    }
+    .hero-left p{
+        font-size: 16px;
+    }
+    .hero-buttons{
+        justify-content: center;
+    }
+    .hero-stats{
+        flex-direction: column;
+        align-items: center;
+    }
+    .section-header h2{
+        font-size: 34px;
+    }
+    .contact-content{
+        padding: 35px 20px;
+    }
+    .contact-content h2{
+        font-size: 36px;
+    }
+    .rocket{
+        max-width: 300px;
+    }
+    .footer-grid{
+        text-align: center;
+    }
+}
+
+/* ==========================
+   SMALL PHONES
+========================== */
+
+@media(max-width: 480px){
+    .hero-left h1{
+        font-size: 34px;
+    }
+    .primary-btn,
+    .secondary-btn{
+        width: 100%;
+        text-align: center;
+    }
+    .contact-content h2{
+        font-size: 30px;
+    }
+    .stat-card h3{
+        font-size: 40px;
+    }
+    .step-number{
+        width: 65px;
+        height: 65px;
+        font-size: 20px;
+    }
+}
