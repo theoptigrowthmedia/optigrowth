@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: optigrowth
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn optigrowth.wsgi:application"
